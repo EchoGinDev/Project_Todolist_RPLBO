@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class CatatanController {
 
-    public TextField searchbar;
     @FXML
     private TextField txtFldJudul; // Input field untuk judul catatan
 
