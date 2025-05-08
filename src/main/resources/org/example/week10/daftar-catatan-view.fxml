@@ -32,11 +32,12 @@
     <StackPane prefHeight="27.0" prefWidth="275.0">
         <children>
             <TextField fx:id="searchBox" prefHeight="26.0" prefWidth="309.0" styleClass="transparent" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" styleClass="delete-button" text="Bersihkan" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" styleClass="delete-button" text="Bersihkan" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT" onAction="#onClearSearchClick">
                 <StackPane.margin>
                     <Insets />
                 </StackPane.margin>
             </Button>
+
         </children>
     </StackPane>
     <TableView fx:id="table" layoutY="163.2" prefHeight="295.0" prefWidth="452.0">
