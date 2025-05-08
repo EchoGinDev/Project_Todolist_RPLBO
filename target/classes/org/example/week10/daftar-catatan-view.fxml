@@ -8,45 +8,34 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <VBox prefHeight="182.0" prefWidth="398.0">
+
+    <Label fx:id="labelJam" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <VBox>
         <Label text="Judul:" />
         <TextField fx:id="txtFldJudul" promptText="Judul" />
-        <Label text="Isi:">
-            <padding>
-                <Insets top="10.0" />
-            </padding>
-        </Label>
-        <TextArea fx:id="txtAreaKonten" prefHeight="0.0" prefWidth="452.0" promptText="Isi" />
+        <Label text="Isi:" />
+        <TextArea fx:id="txtAreaKonten" promptText="Isi" />
         <Label text="Deadline:" />
-        <DatePicker fx:id="datePickerDeadline" prefHeight="25.0" prefWidth="452.0" />
+        <DatePicker fx:id="datePickerDeadline" />
     </VBox>
-    <HBox alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="200.0">
-        <Button fx:id="btnSimpan" onAction="#onBtnSimpanClick" text="Simpan">
-            <HBox.margin>
-                <Insets right="10.0" />
-            </HBox.margin>
-        </Button>
-        <Button fx:id="btnHapus" onAction="#onBtnHapus" text="Hapus">
-            <HBox.margin>
-                <Insets right="10.0" />
-            </HBox.margin>
-        </Button>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button fx:id="btnSimpan" onAction="#onBtnSimpanClick" text="Simpan" />
+        <Button fx:id="btnHapus" onAction="#onBtnHapus" text="Hapus" />
     </HBox>
-    <StackPane prefHeight="27.0" prefWidth="275.0">
-        <children>
-            <TextField fx:id="searchBox" prefHeight="26.0" prefWidth="309.0" styleClass="transparent" />
-            <Button mnemonicParsing="false" onAction="#onClearSearchClick" prefHeight="26.0" prefWidth="69.0" styleClass="delete-button" text="Bersihkan" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
-                <StackPane.margin>
-                    <Insets />
-                </StackPane.margin>
-            </Button>
-        </children>
+
+    <StackPane>
+        <TextField fx:id="searchBox" promptText="Cari judul..." />
+        <Button fx:id="btnClearSearch" onAction="#onClearSearchClick" text="Bersihkan" StackPane.alignment="CENTER_RIGHT" />
     </StackPane>
-    <TableView fx:id="table" layoutY="163.2" prefHeight="295.0" prefWidth="452.0">
+
+    <TableView fx:id="table">
         <columns>
-            <TableColumn fx:id="id" prefWidth="50.0" resizable="false" text="ID" />
-            <TableColumn fx:id="judul" prefWidth="171.0" resizable="false" text="Judul" />
-            <TableColumn fx:id="deadline" prefWidth="228.0" resizable="false" text="Deadline" />
+            <TableColumn fx:id="id" text="ID" prefWidth="50" />
+            <TableColumn fx:id="judul" text="Judul" prefWidth="150" />
+            <TableColumn fx:id="deadline" text="Deadline" prefWidth="150" />
+            <TableColumn fx:id="countdown" text="Countdown" prefWidth="200" />
         </columns>
     </TableView>
 </VBox>

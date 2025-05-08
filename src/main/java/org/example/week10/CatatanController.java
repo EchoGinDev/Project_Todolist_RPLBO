@@ -1,12 +1,18 @@
 package org.example.week10;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 
-import java.time.LocalDate;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class CatatanController {
 
@@ -21,6 +27,8 @@ public class CatatanController {
     @FXML private TableColumn<Catatan, Integer> id;
     @FXML private TableColumn<Catatan, String> judul;
     @FXML private TableColumn<Catatan, LocalDate> deadline;
+    @FXML private TableColumn<Catatan, String> countdown;
+    @FXML private Label labelJam;
 
     private ObservableList<Catatan> catatanList;
     private int nextId = 1;
@@ -32,6 +40,7 @@ public class CatatanController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         judul.setCellValueFactory(new PropertyValueFactory<>("judul"));
         deadline.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+        countdown.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountdown()));
         table.setItems(catatanList);
 
         table.setOnMouseClicked(event -> {
@@ -45,6 +54,46 @@ public class CatatanController {
         });
 
         searchBox.textProperty().addListener((obs, oldVal, newVal) -> onSearch());
+
+        mulaiJamRealtime();
+        updateCountdownSetiapDetik();
+        periksaDeadlineDekat();
+    }
+
+    private void mulaiJamRealtime() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> {
+                    LocalTime now = LocalTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    labelJam.setText(now.format(formatter));
+                }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    private void updateCountdownSetiapDetik() {
+        Timeline countdownUpdater = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> table.refresh())
+        );
+        countdownUpdater.setCycleCount(Timeline.INDEFINITE);
+        countdownUpdater.play();
+    }
+
+    private void periksaDeadlineDekat() {
+        Timeline deadlineChecker = new Timeline(
+                new KeyFrame(Duration.seconds(5), e -> {
+                    for (Catatan catatan : catatanList) {
+                        if (catatan.getDeadline() != null &&
+                                ChronoUnit.DAYS.between(LocalDate.now(), catatan.getDeadline()) == 0) {
+                            showAlert(Alert.AlertType.WARNING, "Deadline hari ini: " + catatan.getJudul());
+                        }
+                    }
+                })
+        );
+        deadlineChecker.setCycleCount(Timeline.INDEFINITE);
+        deadlineChecker.play();
     }
 
     private void onSearch() {
