@@ -15,7 +15,9 @@
             <padding>
                 <Insets top="10.0" />
             </padding></Label>
-        <TextArea fx:id="txtAreaKonten" prefHeight="109.0" prefWidth="452.0" promptText="Isi" />
+        <TextArea fx:id="txtAreaKonten" prefHeight="210.0" prefWidth="452.0" promptText="Isi" />
+      <Label prefHeight="18.0" prefWidth="59.0" text="Deadline:" />
+      <DatePicker fx:id="datePickerDeadline" prefHeight="26.0" prefWidth="454.0" />
     </VBox>
     <HBox alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="200.0">
         <Button fx:id="btnSimpan" onAction="#onBtnSimpanClick" text="Simpan">
@@ -32,17 +34,19 @@
     <StackPane prefHeight="27.0" prefWidth="275.0">
         <children>
             <TextField fx:id="searchBox" prefHeight="26.0" prefWidth="309.0" styleClass="transparent" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" styleClass="delete-button" text="Bersihkan" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
+            <Button mnemonicParsing="false" onAction="#onClearSearchClick" prefHeight="26.0" prefWidth="69.0" styleClass="delete-button" text="Bersihkan" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
                 <StackPane.margin>
                     <Insets />
                 </StackPane.margin>
             </Button>
+
         </children>
     </StackPane>
     <TableView fx:id="table" layoutY="163.2" prefHeight="295.0" prefWidth="452.0">
         <columns>
             <TableColumn fx:id="id" maxWidth="1.7976931348623157E308" prefWidth="50.0" resizable="false" text="ID" />
-            <TableColumn fx:id="judul" maxWidth="1.7976931348623157E308" prefWidth="400.0" resizable="false" text="Judul" />
+            <TableColumn fx:id="judul" maxWidth="1.7976931348623157E308" prefWidth="149.59998321533203" resizable="false" text="Judul" />
+         <TableColumn fx:id="deadline" prefWidth="251.19998168945312" text="Deadline" />
         </columns>
     </TableView>
 </VBox>

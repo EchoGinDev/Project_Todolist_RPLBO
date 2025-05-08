@@ -5,12 +5,21 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.time.LocalDate;
+
 
 /**
  * Controller untuk aplikasi manajemen catatan.
  * Mengelola logika untuk menambahkan, mengedit, menghapus, dan mencari catatan.
  */
 public class CatatanController {
+
+    @FXML
+    private DatePicker datePickerDeadline;
+
+    @FXML
+    private TableColumn<Catatan, String> deadline;
+
 
     @FXML
     private TextField txtFldJudul; // Input field untuk judul catatan
@@ -53,6 +62,8 @@ public class CatatanController {
         catatanList = FXCollections.observableArrayList();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         judul.setCellValueFactory(new PropertyValueFactory<>("judul"));
+        deadline.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+
         table.setItems(catatanList);
 
         // Isi form jika baris tabel diklik
@@ -62,6 +73,8 @@ public class CatatanController {
                 selectedCatatan = selected;
                 txtFldJudul.setText(selected.getJudul());
                 txtAreaKonten.setText(selected.getKonten());
+                datePickerDeadline.setValue(LocalDate.parse(selected.getDeadline()));
+
             }
         });
 
@@ -109,17 +122,19 @@ public class CatatanController {
     private void onBtnSimpanClick() {
         String judulText = txtFldJudul.getText().trim();
         String isiText = txtAreaKonten.getText().trim();
+        String deadlineText = datePickerDeadline.getValue() != null ? datePickerDeadline.getValue().toString() : "";
 
         if (!judulText.isEmpty() && !isiText.isEmpty()) {
             if (selectedCatatan == null) {
                 // Tambah data baru
-                Catatan catatan = new Catatan(nextId++, judulText, isiText);
+                Catatan catatan = new Catatan(nextId++, judulText, isiText, deadlineText);
                 catatanList.add(catatan);
                 showAlert(Alert.AlertType.INFORMATION, "Catatan Ditambahkan!");
             } else {
                 // Edit catatan
                 selectedCatatan.setJudul(judulText);
                 selectedCatatan.setKonten(isiText);
+                selectedCatatan.setDeadline(deadlineText);
                 table.refresh();
                 showAlert(Alert.AlertType.INFORMATION, "Catatan Diubah!");
             }
@@ -128,6 +143,7 @@ public class CatatanController {
             showAlert(Alert.AlertType.WARNING, "Judul dan Isi tidak boleh kosong.");
         }
     }
+
 
     /**
      * Fungsi ketika tombol "Hapus" diklik.
@@ -164,5 +180,7 @@ public class CatatanController {
         txtFldJudul.requestFocus();
         selectedCatatan = null;
         table.getSelectionModel().clearSelection();
+        datePickerDeadline.setValue(null);
+
     }
 }
