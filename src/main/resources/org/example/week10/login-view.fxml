@@ -26,7 +26,7 @@
         <Hyperlink fx:id="lblForgot" layoutX="425.0" layoutY="241.0" text="Forget Password" />
       <Pane layoutY="-5.0" prefHeight="416.0" prefWidth="275.0" style="-fx-background-color: #3DED97;">
          <children>
-            <Label alignment="TOP_LEFT" layoutX="45.0" layoutY="80.0" prefHeight="37.0" prefWidth="70.0" text="#001" textFill="WHITE">
+            <Label alignment="TOP_LEFT" layoutX="57.0" layoutY="171.0" prefHeight="37.0" prefWidth="162.0" text="To-Do List" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="24.0" />
                </font>
