@@ -8,32 +8,22 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class LoginController {
 
-    @FXML
-    private TextField txtUsername;
-
-    @FXML
-    private PasswordField txtPassword;
-
-    @FXML
-    private Button btnLogin;
-
-    @FXML
-    private Hyperlink lblForgot;
+    @FXML private TextField txtUsername;
+    @FXML private PasswordField txtPassword;
+    @FXML private Button btnLogin;
+    @FXML private Hyperlink lblForgot;
 
     @FXML
     public void btnLoginClick() {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        //cek
+
         if (username.equals("admin") && password.equals("admin")) {
-            showAlert(Alert.AlertType.INFORMATION, "Login Berhasil!", "Selamat datang, " + username);
             try {
-                // Tutup jendela login
                 Stage currentStage = (Stage) btnLogin.getScene().getWindow();
                 currentStage.close();
 

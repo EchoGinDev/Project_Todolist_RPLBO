@@ -1,53 +1,69 @@
 package org.example.week10;
 
+import javafx.beans.property.*;
+
 public class Catatan {
-    private int id;
-    private String judul;
-    private String konten;
-    private String deadline; // Format string agar mudah ditampilkan
-
-
-    public Catatan(String judul, String konten) {
-        this.judul = judul;
-        this.konten = konten;
-    }
+    private final IntegerProperty id;
+    private final StringProperty judul;
+    private final StringProperty konten;
+    private final StringProperty deadline;
 
     public Catatan(int id, String judul, String konten, String deadline) {
-        this.id = id;
-        this.judul = judul;
-        this.konten = konten;
-        this.deadline = deadline;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+        this.id = new SimpleIntegerProperty(id);
+        this.judul = new SimpleStringProperty(judul);
+        this.konten = new SimpleStringProperty(konten);
+        this.deadline = new SimpleStringProperty(deadline);
     }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
     }
 
     public String getJudul() {
-        return judul;
+        return judul.get();
     }
 
     public void setJudul(String judul) {
-        this.judul = judul;
+        this.judul.set(judul);
+    }
+
+    public StringProperty judulProperty() {
+        return judul;
     }
 
     public String getKonten() {
-        return konten;
+        return konten.get();
     }
 
     public void setKonten(String konten) {
-        this.konten = konten;
+        this.konten.set(konten);
+    }
+
+    public StringProperty kontenProperty() {
+        return konten;
+    }
+
+    public String getDeadline() {
+        return deadline.get();
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline.set(deadline);
+    }
+
+    public StringProperty deadlineProperty() {
+        return deadline;
+    }
+
+    public String getIsi() {
+        return konten.get();
     }
 }
