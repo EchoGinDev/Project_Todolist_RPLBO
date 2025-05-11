@@ -7,35 +7,31 @@
 
 <AnchorPane prefHeight="567.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.CatatanController">
    <children>
-      <StackPane layoutX="232.0" layoutY="85.0" prefHeight="27.0" prefWidth="512.0">
+      <StackPane layoutX="147.0" layoutY="85.0" prefHeight="27.0" prefWidth="535.0">
          <children>
-            <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#onClearSearchClick" style="-fx-background-color: #e12885;" styleClass="delete-button" text="Clear" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Button>
-            <TextField fx:id="searchBox" prefHeight="27.0" prefWidth="518.0" promptText="Search" />
+            <TextField fx:id="searchBox" promptText="Search" />
          </children>
       </StackPane>
-      <TableView fx:id="tableViewCatatan" layoutX="232.0" layoutY="128.0" prefHeight="311.0" prefWidth="512.0">
+      <TableView fx:id="tableViewCatatan" layoutX="147.0" layoutY="128.0" prefHeight="311.0" prefWidth="597.0">
          <columns>
             <TableColumn fx:id="id" prefWidth="38.40003967285156" resizable="false" text="ID" />
             <TableColumn fx:id="judul" prefWidth="317.5999755859375" resizable="false" text="Judul" />
             <TableColumn fx:id="deadline" prefWidth="96.79998779296875" text="Deadline" />
          </columns>
       </TableView>
-      <Pane prefHeight="567.0" prefWidth="198.0" style="-fx-background-color: #86cecb;" />
-      <HBox alignment="TOP_RIGHT" layoutX="560.0" layoutY="464.0" prefHeight="35.0" prefWidth="184.0">
+      <Pane prefHeight="567.0" prefWidth="130.0" style="-fx-background-color: #86cecb;" />
+      <HBox alignment="TOP_RIGHT" layoutX="560.0" layoutY="464.0" prefHeight="27.0" prefWidth="184.0">
          <children>
             <Button fx:id="btnHapus" onAction="#onBtnHapus" style="-fx-background-color: #ff5252;" text="Delete" textFill="WHITE" />
-            <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#onBtnAddClick" style="-fx-background-color: #ff5252;" text="Add" textFill="WHITE">
+            <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#onBtnAddClick" style="-fx-background-color: #33d9b2;" text="Add" textFill="WHITE">
                <HBox.margin>
                   <Insets left="12.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <Label layoutX="232.0" layoutY="46.0" text="TODO-LIST">
+      <Button alignment="TOP_CENTER" layoutX="694.0" layoutY="85.0" mnemonicParsing="false" onAction="#onClearSearchClick" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: #ff5252;" styleClass="delete-button" text="Clear" textFill="WHITE" />
+      <Label layoutX="147.0" layoutY="45.0" text="TODO-LIST">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
