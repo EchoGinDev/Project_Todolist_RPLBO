@@ -34,14 +34,14 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="427.0" prefHeight="26.0" prefWidth="508.0">
          <children>
-            <Button fx:id="btnHapus" alignment="TOP_RIGHT" contentDisplay="BOTTOM" onAction="#onBtnHapus" style="-fx-background-color: #E12885;" text="Hapus" textFill="WHITE">
+            <Button fx:id="btnHapus" alignment="TOP_LEFT" onAction="#onBtnHapus" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #ff5252;" text="Hapus" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin></Button>
-            <Button fx:id="btnSimpan" alignment="CENTER_RIGHT" onAction="#onBtnSimpanClick" style="-fx-background-color: #E12885;" text="Simpan" textFill="WHITE" />
+            <Button fx:id="btnSimpan" alignment="CENTER_RIGHT" onAction="#onBtnSimpanClick" style="-fx-background-color: #33d9b2;" text="Simpan" textFill="WHITE" />
          </children>
       </HBox>
-      <Pane prefHeight="538.0" prefWidth="50.0" style="-fx-background-color: #86cecb;" />
+      <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
       <Label layoutX="74.0" layoutY="34.0" text="Add New Task" textFill="#373b3e">
          <font>
             <Font name="System Bold" size="24.0" />
