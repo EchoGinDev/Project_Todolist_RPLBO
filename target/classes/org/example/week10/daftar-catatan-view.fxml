@@ -24,7 +24,7 @@
             <TableColumn fx:id="deadline" prefWidth="96.79998779296875" text="Deadline" />
          </columns>
       </TableView>
-      <Pane prefHeight="567.0" prefWidth="198.0" />
+      <Pane prefHeight="567.0" prefWidth="198.0" style="-fx-background-color: #86cecb;" />
       <HBox alignment="TOP_RIGHT" layoutX="560.0" layoutY="464.0" prefHeight="35.0" prefWidth="184.0">
          <children>
             <Button fx:id="btnHapus" onAction="#onBtnHapus" style="-fx-background-color: #ff5252;" text="Delete" textFill="WHITE" />
