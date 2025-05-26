@@ -31,9 +31,15 @@ public class AddTaskController {
             return;
         }
 
+        if (deadlineDate == null) {
+            showAlert(Alert.AlertType.WARNING, "Mohon pilih tanggal deadline.");
+            return;
+        }
+
         Catatan catatanBaru = new Catatan(0, judul, konten, deadline);
         if (catatanController != null) {
             catatanController.addCatatanBaru(catatanBaru);
+            showAlert(Alert.AlertType.INFORMATION, "Catatan berhasil ditambahkan.");
         }
 
         ((Stage) txtFldJudul.getScene().getWindow()).close();

@@ -14,7 +14,7 @@ public class Catatan {
         this.judul = new SimpleStringProperty(judul);
         this.konten = new SimpleStringProperty(konten);
         this.deadline = new SimpleStringProperty(deadline);
-        this.selesai = new SimpleBooleanProperty(false);
+        this.selesai = new SimpleBooleanProperty(false); // default belum selesai
     }
 
     public int getId() { return id.get(); }
@@ -37,6 +37,7 @@ public class Catatan {
     public void setSelesai(boolean selesai) { this.selesai.set(selesai); }
     public BooleanProperty selesaiProperty() { return selesai; }
 
+    // Alias method
     public String getIsi() {
         return getKonten();
     }

@@ -24,6 +24,7 @@ public class CatatanController {
     @FXML private TableView<Catatan> tableViewCatatan;
     @FXML private TableColumn<Catatan, Integer> id;
     @FXML private TableColumn<Catatan, String> judul;
+    @FXML private TableColumn<Catatan, String> konten;
     @FXML private TableColumn<Catatan, String> deadline;
     @FXML private TableColumn<Catatan, String> countdown;
     @FXML private TableColumn<Catatan, Boolean> status;
@@ -36,11 +37,11 @@ public class CatatanController {
 
     @FXML
     private void initialize() {
-        // Supaya checkbox bisa dicentang
         tableViewCatatan.setEditable(true);
 
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
+        konten.setCellValueFactory(data -> data.getValue().kontenProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
@@ -107,8 +108,7 @@ public class CatatanController {
         } else {
             ObservableList<Catatan> filtered = FXCollections.observableArrayList();
             for (Catatan c : catatanList) {
-                if (c.getJudul().toLowerCase().contains(keyword) ||
-                        c.getKonten().toLowerCase().contains(keyword)) {
+                if (c.getJudul().toLowerCase().contains(keyword) || c.getKonten().toLowerCase().contains(keyword)) {
                     filtered.add(c);
                 }
             }
@@ -161,14 +161,10 @@ public class CatatanController {
     @FXML
     private void handleLogout() {
         try {
-            // Hapus session saat logout
             SessionManager.clearSession();
-
-            // Tutup jendela saat ini
             Stage stage = (Stage) btnLogout.getScene().getWindow();
             stage.close();
 
-            // Tampilkan halaman login
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/login-view.fxml"));
             Parent root = loader.load();
 
