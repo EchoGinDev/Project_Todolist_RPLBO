@@ -7,63 +7,37 @@ public class Catatan {
     private final StringProperty judul;
     private final StringProperty konten;
     private final StringProperty deadline;
+    private final BooleanProperty selesai;
 
     public Catatan(int id, String judul, String konten, String deadline) {
         this.id = new SimpleIntegerProperty(id);
         this.judul = new SimpleStringProperty(judul);
         this.konten = new SimpleStringProperty(konten);
         this.deadline = new SimpleStringProperty(deadline);
+        this.selesai = new SimpleBooleanProperty(false);
     }
 
-    public int getId() {
-        return id.get();
-    }
+    public int getId() { return id.get(); }
+    public void setId(int id) { this.id.set(id); }
+    public IntegerProperty idProperty() { return id; }
 
-    public void setId(int id) {
-        this.id.set(id);
-    }
+    public String getJudul() { return judul.get(); }
+    public void setJudul(String judul) { this.judul.set(judul); }
+    public StringProperty judulProperty() { return judul; }
 
-    public IntegerProperty idProperty() {
-        return id;
-    }
+    public String getKonten() { return konten.get(); }
+    public void setKonten(String konten) { this.konten.set(konten); }
+    public StringProperty kontenProperty() { return konten; }
 
-    public String getJudul() {
-        return judul.get();
-    }
+    public String getDeadline() { return deadline.get(); }
+    public void setDeadline(String deadline) { this.deadline.set(deadline); }
+    public StringProperty deadlineProperty() { return deadline; }
 
-    public void setJudul(String judul) {
-        this.judul.set(judul);
-    }
-
-    public StringProperty judulProperty() {
-        return judul;
-    }
-
-    public String getKonten() {
-        return konten.get();
-    }
-
-    public void setKonten(String konten) {
-        this.konten.set(konten);
-    }
-
-    public StringProperty kontenProperty() {
-        return konten;
-    }
-
-    public String getDeadline() {
-        return deadline.get();
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline.set(deadline);
-    }
-
-    public StringProperty deadlineProperty() {
-        return deadline;
-    }
+    public boolean isSelesai() { return selesai.get(); }
+    public void setSelesai(boolean selesai) { this.selesai.set(selesai); }
+    public BooleanProperty selesaiProperty() { return selesai; }
 
     public String getIsi() {
-        return konten.get();
+        return getKonten();
     }
 }

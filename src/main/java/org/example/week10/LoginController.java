@@ -36,7 +36,7 @@ public class LoginController {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error!", "Gagal membuka halaman daftar catatan.");
+                showAlert(Alert.AlertType.ERROR, "Error!", "Gagal membuka halaman daftar catatan.\n" + e.getMessage());
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Gagal!", "Username atau password salah.");
@@ -55,6 +55,8 @@ public class LoginController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-        alert.show();
+        Stage stage = (Stage) btnLogin.getScene().getWindow();
+        alert.initOwner(stage);
+        alert.showAndWait();
     }
 }

@@ -6,12 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.stage.Stage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +26,7 @@ public class CatatanController {
     @FXML private TableColumn<Catatan, String> judul;
     @FXML private TableColumn<Catatan, String> deadline;
     @FXML private TableColumn<Catatan, String> countdown;
+    @FXML private TableColumn<Catatan, Boolean> status;
     @FXML private TextField searchBox;
 
     private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList(DBManager.getInstance().getAllCatatan());
@@ -34,19 +35,32 @@ public class CatatanController {
 
     @FXML
     private void initialize() {
-        id.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        judul.setCellValueFactory(cellData -> cellData.getValue().judulProperty());
-        deadline.setCellValueFactory(cellData -> cellData.getValue().deadlineProperty());
+        tableViewCatatan.setEditable(true); // Wajib agar checkbox bisa diubah
 
-        countdown.setCellValueFactory(cellData -> {
-            Catatan c = cellData.getValue();
+        id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
+        judul.setCellValueFactory(data -> data.getValue().judulProperty());
+        deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
+
+        status.setCellValueFactory(data -> data.getValue().selesaiProperty());
+        status.setEditable(true); // Aktifkan edit di kolom checkbox
+        status.setCellFactory(tc -> {
+            CheckBoxTableCell<Catatan, Boolean> cell = new CheckBoxTableCell<>();
+            cell.setSelectedStateCallback(index -> {
+                Catatan item = tableViewCatatan.getItems().get(index);
+                return item.selesaiProperty();
+            });
+            return cell;
+        });
+
+        countdown.setCellValueFactory(data -> {
+            Catatan c = data.getValue();
             countdownMap.putIfAbsent(c, new SimpleStringProperty(""));
             return countdownMap.get(c);
         });
 
         searchBox.textProperty().addListener((obs, oldVal, newVal) -> onSearch());
-        tableViewCatatan.setItems(catatanList);
 
+        tableViewCatatan.setItems(catatanList);
         startCountdownThread();
     }
 
@@ -67,43 +81,25 @@ public class CatatanController {
 
     private void updateCountdown() {
         Platform.runLater(() -> {
-            for (Catatan catatan : catatanList) {
+            for (Catatan c : catatanList) {
                 try {
-                    String deadlineStr = catatan.getDeadline().trim();
-                    LocalDateTime deadlineDateTime;
+                    String deadlineStr = c.getDeadline().trim();
+                    LocalDateTime deadlineDateTime = deadlineStr.length() == 10
+                            ? LocalDateTime.parse(deadlineStr + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                            : LocalDateTime.parse(deadlineStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-                    if (deadlineStr.length() == 10) {
-                        deadlineDateTime = LocalDateTime.parse(deadlineStr + " 00:00:00",
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    } else {
-                        deadlineDateTime = LocalDateTime.parse(deadlineStr,
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                    }
+                    long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), deadlineDateTime);
+                    String text = seconds >= 0
+                            ? String.format("%d hari %02d:%02d:%02d",
+                            seconds / (3600 * 24),
+                            (seconds % (3600 * 24)) / 3600,
+                            (seconds % 3600) / 60,
+                            seconds % 60)
+                            : "Terlambat";
 
-                    LocalDateTime now = LocalDateTime.now();
-                    long totalSeconds = ChronoUnit.SECONDS.between(now, deadlineDateTime);
-
-                    String text;
-                    if (totalSeconds >= 0) {
-                        long days = totalSeconds / (24 * 3600);
-                        long hours = (totalSeconds % (24 * 3600)) / 3600;
-                        long minutes = (totalSeconds % 3600) / 60;
-                        long seconds = totalSeconds % 60;
-
-                        text = String.format(
-                                "%d %s %02d %s %02d %s %02d %s",
-                                days, (days == 1 ? "hari" : "hari"),
-                                hours, (hours == 1 ? "jam" : "jam"),
-                                minutes, (minutes == 1 ? "menit" : "menit"),
-                                seconds, (seconds == 1 ? "detik" : "detik")
-                        );
-                    } else {
-                        text = "Terlambat";
-                    }
-
-                    countdownMap.computeIfAbsent(catatan, c -> new SimpleStringProperty()).set(text);
+                    countdownMap.get(c).set(text);
                 } catch (Exception e) {
-                    countdownMap.computeIfAbsent(catatan, c -> new SimpleStringProperty()).set("Format salah");
+                    countdownMap.get(c).set("Format salah");
                 }
             }
         });
@@ -136,20 +132,13 @@ public class CatatanController {
         }
     }
 
-    private void showAlert(Alert.AlertType type, String message) {
-        Alert alert = new Alert(type, message);
-        alert.setHeaderText(null);
-        alert.showAndWait();
-    }
-
     public void addCatatanBaru(Catatan baru) {
         DBManager.getInstance().tambahCatatan(baru);
-        catatanList.clear();
-        catatanList.addAll(DBManager.getInstance().getAllCatatan());
+        catatanList.setAll(DBManager.getInstance().getAllCatatan());
     }
 
     @FXML
-    public void onBtnAddClick(ActionEvent actionEvent) {
+    private void onBtnAddClick(ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/add-task-view.fxml"));
             Parent root = loader.load();
@@ -161,10 +150,15 @@ public class CatatanController {
             stage.setTitle("Tambah Catatan");
             stage.setScene(new Scene(root));
             stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Gagal membuka form tambah catatan.");
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type, message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }

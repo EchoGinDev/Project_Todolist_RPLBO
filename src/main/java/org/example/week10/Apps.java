@@ -4,16 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class Apps extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // pastikan login-view.fxml berada di folder resources/org/example/week10/
-            FXMLLoader loader = new FXMLLoader(Apps.class.getResource("login-view.fxml"));
+            // Load login-view.fxml dari folder resources/org/example/week10/
+            FXMLLoader loader = new FXMLLoader(Apps.class.getResource("/org/example/week10/login-view.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -29,5 +27,4 @@ public class Apps extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }

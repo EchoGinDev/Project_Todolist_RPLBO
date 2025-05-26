@@ -36,8 +36,7 @@ public class AddTaskController {
             catatanController.addCatatanBaru(catatanBaru);
         }
 
-        Stage stage = (Stage) txtFldJudul.getScene().getWindow();
-        stage.close();
+        ((Stage) txtFldJudul.getScene().getWindow()).close();
     }
 
     @FXML

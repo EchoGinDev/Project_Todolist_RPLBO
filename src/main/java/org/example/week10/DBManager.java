@@ -12,28 +12,7 @@ public class DBManager {
     private DBManager() {
         try {
             connection = DriverManager.getConnection(DB_URL);
-            if (connection != null) {
-                System.out.println("Koneksi ke database berhasil!");
-            } else {
-                System.out.println("Gagal melakukan koneksi ke database.");
-            }
             createTableIfNotExists();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void insertCatatan(Catatan baru) {
-    }
-
-    private void createTableIfNotExists() {
-        String createTableQuery = "CREATE TABLE IF NOT EXISTS catatan ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "judul TEXT NOT NULL, "
-                + "konten TEXT NOT NULL, "
-                + "deadline TEXT)";
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(createTableQuery);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,55 +25,51 @@ public class DBManager {
         return instance;
     }
 
-    // Menambahkan catatan baru ke database
-    public void tambahCatatan(Catatan catatan) {
+    private void createTableIfNotExists() {
+        String query = "CREATE TABLE IF NOT EXISTS catatan (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "judul TEXT NOT NULL," +
+                "konten TEXT NOT NULL," +
+                "deadline TEXT)";
+        try (Statement stmt = connection.createStatement()) {
+            stmt.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void tambahCatatan(Catatan c) {
         String query = "INSERT INTO catatan (judul, konten, deadline) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, catatan.getJudul());
-            stmt.setString(2, catatan.getIsi());
-            stmt.setString(3, catatan.getDeadline());
+            stmt.setString(1, c.getJudul());
+            stmt.setString(2, c.getIsi());
+            stmt.setString(3, c.getDeadline());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Mengambil semua catatan dari database
     public List<Catatan> getAllCatatan() {
-        List<Catatan> catatanList = new ArrayList<>();
+        List<Catatan> list = new ArrayList<>();
         String query = "SELECT * FROM catatan";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                Catatan catatan = new Catatan(
+                Catatan c = new Catatan(
                         rs.getInt("id"),
                         rs.getString("judul"),
                         rs.getString("konten"),
                         rs.getString("deadline")
                 );
-                catatanList.add(catatan);
+                list.add(c);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return catatanList;
+        return list;
     }
 
-    // Memperbarui catatan di database
-    public void updateCatatan(Catatan catatan) {
-        String query = "UPDATE catatan SET judul = ?, konten = ?, deadline = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, catatan.getJudul());
-            stmt.setString(2, catatan.getIsi());
-            stmt.setString(3, catatan.getDeadline());
-            stmt.setInt(4, catatan.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Menghapus catatan dari database
     public void hapusCatatan(int id) {
         String query = "DELETE FROM catatan WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
