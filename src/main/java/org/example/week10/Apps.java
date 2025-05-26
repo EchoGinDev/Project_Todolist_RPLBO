@@ -5,23 +5,28 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 public class Apps extends Application {
     @Override
-    public void start(Stage stage) {
-        try {
-            // Load login-view.fxml dari folder resources/org/example/week10/
-            FXMLLoader loader = new FXMLLoader(Apps.class.getResource("/org/example/week10/login-view.fxml"));
-            Parent root = loader.load();
+    public void start(Stage stage) throws IOException {
+        String sessionUser = SessionManager.getSessionUser(); // cek session
+        FXMLLoader fxmlLoader;
 
-            Scene scene = new Scene(root);
-            stage.setTitle("Login");
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (sessionUser != null) {
+            // Jika session ada, langsung ke daftar catatan
+            fxmlLoader = new FXMLLoader(Apps.class.getResource("daftar-catatan-view.fxml"));
+        } else {
+            // Jika belum login, tampilkan login
+            fxmlLoader = new FXMLLoader(Apps.class.getResource("login-view.fxml"));
         }
+
+        Parent root = fxmlLoader.load();         // Load FXML
+        Scene scene = new Scene(root);           // Buat scene tanpa ukuran tetap
+        stage.setTitle("To-Do List");
+        stage.setScene(scene);
+        stage.sizeToScene();                     // Ukuran jendela menyesuaikan FXML
+        stage.show();
     }
 
     public static void main(String[] args) {

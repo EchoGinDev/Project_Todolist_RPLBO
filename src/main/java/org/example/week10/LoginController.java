@@ -8,7 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
+// ✅ Import SessionManager
+import org.example.week10.SessionManager;
 
 public class LoginController {
 
@@ -24,6 +28,8 @@ public class LoginController {
 
         if (username.equals("admin") && password.equals("admin")) {
             try {
+                SessionManager.saveSession(username);
+
                 Stage currentStage = (Stage) btnLogin.getScene().getWindow();
                 currentStage.close();
 
@@ -36,7 +42,7 @@ public class LoginController {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Error!", "Gagal membuka halaman daftar catatan.\n" + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Error!", "Gagal membuka halaman daftar catatan.");
             }
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Gagal!", "Username atau password salah.");
@@ -55,8 +61,6 @@ public class LoginController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-        Stage stage = (Stage) btnLogin.getScene().getWindow();
-        alert.initOwner(stage);
-        alert.showAndWait();
+        alert.show();
     }
 }

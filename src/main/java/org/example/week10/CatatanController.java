@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -27,6 +28,7 @@ public class CatatanController {
     @FXML private TableColumn<Catatan, String> countdown;
     @FXML private TableColumn<Catatan, Boolean> status;
     @FXML private TextField searchBox;
+    @FXML private Button btnLogout;
 
     private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList(DBManager.getInstance().getAllCatatan());
     private final Map<Catatan, SimpleStringProperty> countdownMap = new HashMap<>();
@@ -154,5 +156,29 @@ public class CatatanController {
         Alert alert = new Alert(type, message);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            // Hapus session saat logout
+            SessionManager.clearSession();
+
+            // Tutup jendela saat ini
+            Stage stage = (Stage) btnLogout.getScene().getWindow();
+            stage.close();
+
+            // Tampilkan halaman login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/login-view.fxml"));
+            Parent root = loader.load();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login");
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Gagal logout.");
+        }
     }
 }
