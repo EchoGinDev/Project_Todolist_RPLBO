@@ -15,10 +15,10 @@
       <TableView fx:id="tableViewCatatan" layoutX="147.0" layoutY="128.0" prefHeight="311.0" prefWidth="597.0">
          <columns>
             <TableColumn fx:id="id" prefWidth="38.40003967285156" resizable="false" text="ID" />
-            <TableColumn fx:id="judul" prefWidth="317.5999755859375" resizable="false" text="Judul" />
-            <TableColumn fx:id="deadline" prefWidth="96.79998779296875" text="Deadline" />
-            <TableColumn fx:id="countdown" text="Countdown" />
-            <TableColumn fx:id="status" text="Status" />
+            <TableColumn fx:id="judul" editable="false" prefWidth="170.0" resizable="false" sortable="false" text="Judul" />
+            <TableColumn fx:id="deadline" prefWidth="116.33331298828125" text="Deadline" />
+            <TableColumn fx:id="countdown" prefWidth="178.33331298828125" text="Countdown" />
+            <TableColumn fx:id="status" prefWidth="91.3333740234375" text="Status" />
          </columns>
       </TableView>
       <Pane prefHeight="567.0" prefWidth="130.0" style="-fx-background-color: #86cecb;" />

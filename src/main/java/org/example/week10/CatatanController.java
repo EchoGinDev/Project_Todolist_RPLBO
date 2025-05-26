@@ -89,12 +89,12 @@ public class CatatanController {
                             : LocalDateTime.parse(deadlineStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
                     long seconds = ChronoUnit.SECONDS.between(LocalDateTime.now(), deadlineDateTime);
+
                     String text = seconds >= 0
-                            ? String.format("%d hari %02d:%02d:%02d",
+                            ? String.format("%d hari %d jam %d menit",
                             seconds / (3600 * 24),
                             (seconds % (3600 * 24)) / 3600,
-                            (seconds % 3600) / 60,
-                            seconds % 60)
+                            (seconds % 3600) / 60)
                             : "Terlambat";
 
                     countdownMap.get(c).set(text);
