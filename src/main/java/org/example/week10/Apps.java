@@ -26,7 +26,7 @@ public class Apps extends Application {
         stage.setTitle("To-Do List");
         stage.setScene(scene);
         stage.show();
-    }   
+    }
 
 
     public static void main(String[] args) {
