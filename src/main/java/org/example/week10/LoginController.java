@@ -8,7 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
+// ✅ Import SessionManager
+import org.example.week10.SessionManager;
 
 public class LoginController {
 
@@ -24,6 +28,8 @@ public class LoginController {
 
         if (username.equals("admin") && password.equals("admin")) {
             try {
+                SessionManager.saveSession(username);
+
                 Stage currentStage = (Stage) btnLogin.getScene().getWindow();
                 currentStage.close();
 

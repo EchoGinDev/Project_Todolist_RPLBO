@@ -10,21 +10,24 @@ import java.io.IOException;
 
 public class Apps extends Application {
     @Override
-    public void start(Stage stage) {
-        try {
-            // pastikan login-view.fxml berada di folder resources/org/example/week10/
-            FXMLLoader loader = new FXMLLoader(Apps.class.getResource("login-view.fxml"));
-            Parent root = loader.load();
+    public void start(Stage stage) throws IOException {
+        String sessionUser = SessionManager.getSessionUser(); // cek session
+        FXMLLoader fxmlLoader;
 
-            Scene scene = new Scene(root);
-            stage.setTitle("Login");
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (sessionUser != null) {
+            // Jika session ada, langsung ke daftar catatan
+            fxmlLoader = new FXMLLoader(Apps.class.getResource("daftar-catatan-view.fxml"));
+        } else {
+            // Jika belum login, tampilkan login
+            fxmlLoader = new FXMLLoader(Apps.class.getResource("login-view.fxml"));
         }
-    }
+
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.setTitle("To-Do List");
+        stage.setScene(scene);
+        stage.show();
+    }   
+
 
     public static void main(String[] args) {
         launch();
