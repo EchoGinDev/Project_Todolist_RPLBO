@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,22 +34,16 @@ public class CatatanController {
 
     @FXML
     private void initialize() {
-        tableViewCatatan.setEditable(true); // Wajib agar checkbox bisa diubah
+        // Supaya checkbox bisa dicentang
+        tableViewCatatan.setEditable(true);
 
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
-        status.setEditable(true); // Aktifkan edit di kolom checkbox
-        status.setCellFactory(tc -> {
-            CheckBoxTableCell<Catatan, Boolean> cell = new CheckBoxTableCell<>();
-            cell.setSelectedStateCallback(index -> {
-                Catatan item = tableViewCatatan.getItems().get(index);
-                return item.selesaiProperty();
-            });
-            return cell;
-        });
+        status.setCellFactory(CheckBoxTableCell.forTableColumn(status));
+        status.setEditable(true);
 
         countdown.setCellValueFactory(data -> {
             Catatan c = data.getValue();
@@ -112,7 +105,8 @@ public class CatatanController {
         } else {
             ObservableList<Catatan> filtered = FXCollections.observableArrayList();
             for (Catatan c : catatanList) {
-                if (c.getJudul().toLowerCase().contains(keyword)) {
+                if (c.getJudul().toLowerCase().contains(keyword) ||
+                        c.getKonten().toLowerCase().contains(keyword)) {
                     filtered.add(c);
                 }
             }
@@ -138,7 +132,7 @@ public class CatatanController {
     }
 
     @FXML
-    private void onBtnAddClick(ActionEvent e) {
+    private void onBtnAddClick(javafx.event.ActionEvent e) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/add-task-view.fxml"));
             Parent root = loader.load();
