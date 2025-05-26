@@ -21,7 +21,12 @@
             <TableColumn fx:id="status" prefWidth="91.3333740234375" text="Status" />
          </columns>
       </TableView>
-      <Pane prefHeight="567.0" prefWidth="130.0" style="-fx-background-color: #86cecb;" />
+      <Pane prefHeight="567.0" prefWidth="130.0" style="-fx-background-color: #86cecb;">
+         <children>
+
+            <!-- Tombol Logout -->
+            <Button fx:id="btnLogout" layoutX="14.0" layoutY="528.0" mnemonicParsing="false" onAction="#handleLogout"  style="-fx-background-color: #ff5252;" text="Logout" textFill="WHITE" />
+         </children></Pane>
       <HBox alignment="TOP_RIGHT" layoutX="560.0" layoutY="464.0" prefHeight="27.0" prefWidth="184.0">
          <children>
             <Button fx:id="btnHapus" onAction="#onBtnHapus" style="-fx-background-color: #ff5252;" text="Delete" textFill="WHITE" />
