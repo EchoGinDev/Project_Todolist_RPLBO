@@ -1,4 +1,4 @@
-package org.example.week10.Controller;
+package org.example.week10.ControllerFile;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,8 +13,8 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.example.week10.*;
-import org.example.week10.Manager.DBManager;
-import org.example.week10.Manager.SessionManager;
+import org.example.week10.manager.DBManager;
+import org.example.week10.manager.SessionManager;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,20 +31,25 @@ public class CatatanController {
     @FXML private TableColumn<Catatan, String> deadline;
     @FXML private TableColumn<Catatan, String> countdown;
     @FXML private TableColumn<Catatan, Boolean> status;
+    @FXML private TableColumn<Catatan, String> kategori;
     @FXML private TextField searchBox;
     @FXML private Button btnLogout;
 
-    private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList(DBManager.getInstance().getAllCatatan());
+    private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList();
     private final Map<Catatan, SimpleStringProperty> countdownMap = new HashMap<>();
     private Thread countdownThread;
 
     @FXML
     private void initialize() {
+        catatanList.setAll(DBManager.getInstance().getAllCatatan()); // <-- ini ditambahkan
+        tableViewCatatan.setItems(catatanList);
         tableViewCatatan.setEditable(true);
 
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
+        kategori.setCellValueFactory(data -> data.getValue().kategoriProperty());
+
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
         status.setCellFactory(CheckBoxTableCell.forTableColumn(status));
@@ -141,9 +146,13 @@ public class CatatanController {
         }
     }
 
-    public void addCatatanBaru(Catatan baru) {
-        DBManager.getInstance().tambahCatatan(baru);
-        catatanList.setAll(DBManager.getInstance().getAllCatatan());
+    public void addCatatanBaru(Catatan catatanBaru) {
+        // Biasanya id dibuat otomatis, ini contoh sederhana langsung ditambah
+        int newId = catatanList.size() + 1;
+        catatanBaru.setId(newId);
+
+        catatanList.add(catatanBaru);
+        // listViewCatatan otomatis refresh karena ObservableList
     }
 
     @FXML
@@ -152,7 +161,7 @@ public class CatatanController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/add-task-view.fxml"));
             Parent root = loader.load();
 
-            AddTaskController controller = loader.getController();
+            org.example.week10.ControllerFile.AddTaskController controller = loader.getController();
             controller.setCatatanController(this);
 
             Stage stage = new Stage();
@@ -231,6 +240,9 @@ public class CatatanController {
             showAlert(Alert.AlertType.WARNING, "Pilih catatan yang ingin diedit.");
         }
     }
+
+
+
 
     public void refreshData() {
         catatanList.setAll(DBManager.getInstance().getAllCatatan());
