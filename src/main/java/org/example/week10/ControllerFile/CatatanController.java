@@ -35,12 +35,14 @@ public class CatatanController {
     @FXML private TextField searchBox;
     @FXML private Button btnLogout;
 
-    private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList(DBManager.getInstance().getAllCatatan());
+    private final ObservableList<Catatan> catatanList = FXCollections.observableArrayList();
     private final Map<Catatan, SimpleStringProperty> countdownMap = new HashMap<>();
     private Thread countdownThread;
 
     @FXML
     private void initialize() {
+        catatanList.setAll(DBManager.getInstance().getAllCatatan()); // <-- ini ditambahkan
+        tableViewCatatan.setItems(catatanList);
         tableViewCatatan.setEditable(true);
 
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
@@ -144,9 +146,13 @@ public class CatatanController {
         }
     }
 
-    public void addCatatanBaru(Catatan baru) {
-        DBManager.getInstance().tambahCatatan(baru);
-        catatanList.setAll(DBManager.getInstance().getAllCatatan());
+    public void addCatatanBaru(Catatan catatanBaru) {
+        // Biasanya id dibuat otomatis, ini contoh sederhana langsung ditambah
+        int newId = catatanList.size() + 1;
+        catatanBaru.setId(newId);
+
+        catatanList.add(catatanBaru);
+        // listViewCatatan otomatis refresh karena ObservableList
     }
 
     @FXML

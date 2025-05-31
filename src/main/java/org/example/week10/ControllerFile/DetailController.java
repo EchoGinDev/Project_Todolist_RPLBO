@@ -16,11 +16,14 @@ public class DetailController {
     @FXML private Label labelDeadline;
     @FXML private Label labelCountdown;
     @FXML private Label labelStatus;
+    @FXML private Label labelKategori;
+
 
     public void setDetail(Catatan catatan) {
         labelJudul.setText(catatan.getJudul());
         labelKonten.setText(catatan.getKonten());
         labelDeadline.setText(catatan.getDeadline());
+        labelKategori.setText(catatan.getKategori());
 
         try {
             String deadlineStr = catatan.getDeadline().trim();
@@ -44,4 +47,5 @@ public class DetailController {
 
         labelStatus.setText(catatan.isSelesai() ? "Selesai" : "Belum Selesai");
     }
+
 }

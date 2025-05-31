@@ -12,19 +12,26 @@ public class EditTaskController {
     @FXML private TextField txtFldJudul;
     @FXML private TextArea txtAreaKonten;
     @FXML private DatePicker datePickerDeadline;
+    @FXML private ComboBox<String> comboBoxKategori;
 
     private CatatanController catatanController;
     private Catatan selectedCatatan;
+    public void initialize() {
+        // Inisialisasi pilihan kategori
+        comboBoxKategori.getItems().addAll("Pekerjaan", "Pribadi", "Akademik");
+    }
 
     public void setData(CatatanController catatanController, Catatan selectedCatatan) {
         this.catatanController = catatanController;
         this.selectedCatatan = selectedCatatan;
+
         // Isi field dengan data yang dipilih
         txtFldJudul.setText(selectedCatatan.getJudul());
         txtAreaKonten.setText(selectedCatatan.getKonten());
         if (selectedCatatan.getDeadline() != null && !selectedCatatan.getDeadline().isEmpty()) {
             datePickerDeadline.setValue(java.time.LocalDate.parse(selectedCatatan.getDeadline().substring(0,10)));
         }
+        comboBoxKategori.setValue(selectedCatatan.getKategori()); // set kategori jika ada
     }
 
     @FXML
@@ -33,6 +40,7 @@ public class EditTaskController {
             selectedCatatan.setJudul(txtFldJudul.getText());
             selectedCatatan.setKonten(txtAreaKonten.getText());
             selectedCatatan.setDeadline(datePickerDeadline.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 00:00:00");
+            selectedCatatan.setKategori(comboBoxKategori.getValue());
 
             DBManager.getInstance().updateCatatan(selectedCatatan);
             catatanController.refreshData();

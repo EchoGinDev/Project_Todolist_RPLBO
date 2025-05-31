@@ -8,13 +8,21 @@ public class Catatan {
     private final StringProperty konten;
     private final StringProperty deadline;
     private final BooleanProperty selesai;
+    private final StringProperty kategori;  // Tambahan kategori
 
-    public Catatan(int id, String judul, String konten, String deadline) {
+    // Constructor baru dengan kategori
+    public Catatan(int id, String judul, String konten, String deadline, String kategori) {
         this.id = new SimpleIntegerProperty(id);
         this.judul = new SimpleStringProperty(judul);
         this.konten = new SimpleStringProperty(konten);
         this.deadline = new SimpleStringProperty(deadline);
         this.selesai = new SimpleBooleanProperty(false); // default belum selesai
+        this.kategori = new SimpleStringProperty(kategori);
+    }
+
+    // Constructor lama (jika masih butuh backward compatibility)
+    public Catatan(int id, String judul, String konten, String deadline) {
+        this(id, judul, konten, deadline, ""); // kategori default kosong
     }
 
     public int getId() {
@@ -64,15 +72,22 @@ public class Catatan {
         this.selesai.set(selesai);
     }
     public BooleanProperty selesaiProperty() {
-        return selesai; }
-
-
-
-    // Alias method
-    public String getIsi() {
-
-        return getKonten();
+        return selesai;
     }
 
+    // Properti kategori
+    public String getKategori() {
+        return kategori.get();
+    }
+    public void setKategori(String kategori) {
+        this.kategori.set(kategori);
+    }
+    public StringProperty kategoriProperty() {
+        return kategori;
+    }
 
+    // Alias method, tetap sama
+    public String getIsi() {
+        return getKonten();
+    }
 }
