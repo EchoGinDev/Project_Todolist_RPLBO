@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.CatatanController">
+<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.CatatanController">
    <children>
       <!-- Sidebar kiri -->
       <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="150.0" style="-fx-background-color: #A3DDD3;">
@@ -32,10 +28,10 @@
          <columns>
             <TableColumn fx:id="id" prefWidth="50.0" text="ID" />
             <TableColumn fx:id="judul" prefWidth="150.0" text="Judul" />
-            <TableColumn fx:id="kategori" prefWidth="100.0" text="Kategori"/>
+            <TableColumn fx:id="kategori" prefWidth="100.0" text="Kategori" />
             <TableColumn fx:id="deadline" prefWidth="156.53338623046875" text="Deadline" />
             <TableColumn fx:id="countdown" prefWidth="154.6666259765625" text="Countdown" />
-            <TableColumn fx:id="status" prefWidth="102.9334716796875" text="Status" />
+            <TableColumn fx:id="status" prefWidth="137.33331298828125" text="Status" />
          </columns>
       </TableView>
 
