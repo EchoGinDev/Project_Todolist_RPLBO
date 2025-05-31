@@ -41,7 +41,7 @@ public class CatatanController {
 
     @FXML
     private void initialize() {
-        catatanList.setAll(DBManager.getInstance().getAllCatatan()); // <-- ini ditambahkan
+        catatanList.setAll(DBManager.getInstance().getAllCatatan());
         tableViewCatatan.setItems(catatanList);
         tableViewCatatan.setEditable(true);
 
@@ -49,7 +49,6 @@ public class CatatanController {
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
         kategori.setCellValueFactory(data -> data.getValue().kategoriProperty());
-
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
         status.setCellFactory(CheckBoxTableCell.forTableColumn(status));
@@ -61,9 +60,9 @@ public class CatatanController {
             return countdownMap.get(c);
         });
 
+        searchBox.setPromptText("Cari judul atau kategori...");
         searchBox.textProperty().addListener((obs, oldVal, newVal) -> onSearch());
 
-        tableViewCatatan.setItems(catatanList);
         startCountdownThread();
 
         tableViewCatatan.setRowFactory(tv -> {
@@ -126,7 +125,8 @@ public class CatatanController {
         } else {
             ObservableList<Catatan> filtered = FXCollections.observableArrayList();
             for (Catatan c : catatanList) {
-                if (c.getJudul().toLowerCase().contains(keyword)) {
+                if (c.getJudul().toLowerCase().contains(keyword) ||
+                        c.getKategori().toLowerCase().contains(keyword)) {
                     filtered.add(c);
                 }
             }
@@ -147,12 +147,10 @@ public class CatatanController {
     }
 
     public void addCatatanBaru(Catatan catatanBaru) {
-        // Biasanya id dibuat otomatis, ini contoh sederhana langsung ditambah
         int newId = catatanList.size() + 1;
         catatanBaru.setId(newId);
 
         catatanList.add(catatanBaru);
-        // listViewCatatan otomatis refresh karena ObservableList
     }
 
     @FXML
@@ -161,7 +159,7 @@ public class CatatanController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/add-task-view.fxml"));
             Parent root = loader.load();
 
-            org.example.week10.ControllerFile.AddTaskController controller = loader.getController();
+            AddTaskController controller = loader.getController();
             controller.setCatatanController(this);
 
             Stage stage = new Stage();
@@ -217,6 +215,7 @@ public class CatatanController {
             showAlert(Alert.AlertType.ERROR, "Gagal logout.");
         }
     }
+
     @FXML
     private void onBtnEdit() {
         Catatan selected = tableViewCatatan.getSelectionModel().getSelectedItem();
@@ -241,12 +240,7 @@ public class CatatanController {
         }
     }
 
-
-
-
     public void refreshData() {
         catatanList.setAll(DBManager.getInstance().getAllCatatan());
     }
-
-
 }
