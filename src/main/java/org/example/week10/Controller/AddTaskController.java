@@ -1,9 +1,10 @@
-package org.example.week10;
+package org.example.week10.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.week10.Catatan;
 
 import java.time.LocalDate;
 
