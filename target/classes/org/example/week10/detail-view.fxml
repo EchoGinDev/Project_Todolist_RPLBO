@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.DetailController">
+<AnchorPane prefHeight="413.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.DetailController">
     <children>
         <Label layoutX="20.0" layoutY="20.0" text="Detail Catatan">
             <font>
@@ -24,7 +24,10 @@
         <Label layoutX="20.0" layoutY="150.0" text="Status:" />
         <Label fx:id="labelStatus" layoutX="120.0" layoutY="150.0" text="-" />
 
-        <Label layoutX="20.0" layoutY="190.0" text="Deskripsi:" />
-        <TextArea fx:id="labelKonten" layoutX="20.0" layoutY="210.0" prefWidth="360.0" prefHeight="120.0" wrapText="true" editable="false" />
+        <Label layoutX="20.0" layoutY="180.0" text="Kategori:" />
+        <Label fx:id="labelKategori" layoutX="120.0" layoutY="180.0" text="-" />
+
+        <Label layoutX="19.0" layoutY="207.0" text="Deskripsi:" />
+        <TextArea fx:id="labelKonten" editable="false" layoutX="20.0" layoutY="233.0" prefHeight="120.0" prefWidth="360.0" wrapText="true" />
     </children>
 </AnchorPane>
