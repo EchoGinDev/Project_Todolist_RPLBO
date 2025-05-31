@@ -1,4 +1,4 @@
-package org.example.week10.Controller;
+package org.example.week10.ControllerFile;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 // ✅ Import SessionManager
-import org.example.week10.Manager.SessionManager;
+import org.example.week10.manager.SessionManager;
 
 public class LoginController {
 

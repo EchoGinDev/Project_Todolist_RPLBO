@@ -1,4 +1,4 @@
-package org.example.week10.Manager;
+package org.example.week10.manager;
 
 import org.example.week10.Catatan;
 
@@ -33,7 +33,8 @@ public class DBManager {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "judul TEXT NOT NULL," +
                 "konten TEXT," +
-                "deadline TEXT)";
+                "deadline TEXT," +
+                "kategori TEXT)";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -51,10 +52,13 @@ public class DBManager {
                 String judul = rs.getString("judul");
                 String konten = rs.getString("konten");
                 String deadline = rs.getString("deadline");
+                String kategori = rs.getString("kategori");
+
                 if (deadline != null && deadline.length() > 10) {
-                    deadline = deadline.substring(0, 10); // ambil hanya yyyy-MM-dd
+                    deadline = deadline.substring(0, 10);
                 }
-                list.add(new Catatan(id, judul, konten, deadline));
+
+                list.add(new Catatan(id, judul, konten, deadline, kategori));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,13 +66,13 @@ public class DBManager {
         return list;
     }
 
-
     public void tambahCatatan(Catatan catatan) {
-        String sql = "INSERT INTO catatan (judul, konten, deadline) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO catatan (judul, konten, deadline, kategori) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, catatan.getJudul());
             pstmt.setString(2, catatan.getKonten());
             pstmt.setString(3, catatan.getDeadline());
+            pstmt.setString(4, catatan.getKategori());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,24 +90,20 @@ public class DBManager {
     }
 
     public void updateCatatan(Catatan catatan) {
-        String sql = "UPDATE catatan SET judul = ?, konten = ?, deadline = ? WHERE id = ?";
+        String sql = "UPDATE catatan SET judul = ?, konten = ?, deadline = ?, kategori = ? WHERE id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, catatan.getJudul());
             pstmt.setString(2, catatan.getKonten());
-
-            // Pastikan deadline tanpa jam
             String deadline = catatan.getDeadline();
             if (deadline != null && deadline.length() > 10) {
                 deadline = deadline.substring(0, 10);
             }
             pstmt.setString(3, deadline);
-            pstmt.setInt(4, catatan.getId());
+            pstmt.setString(4, catatan.getKategori());
+            pstmt.setInt(5, catatan.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

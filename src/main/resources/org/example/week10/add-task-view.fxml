@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.Controller.AddTaskController">
+<?import java.lang.String?>
+<AnchorPane prefHeight="601.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.week10.ControllerFile.AddTaskController">
    <children>
-      <VBox layoutX="74.0" layoutY="77.0" prefHeight="349.0" prefWidth="508.0">
+
+      <VBox layoutX="74.0" layoutY="77.0" prefHeight="349.0" prefWidth="508.0" spacing="5.0">
          <children>
-            <Label prefHeight="20.0" prefWidth="87.0" text="Task-Title :">
-               <font>
-                  <Font size="14.0" />
-               </font>
+            <Label text="Task-Title :">
+               <font><Font size="14.0" /></font>
             </Label>
             <TextField fx:id="txtFldJudul" promptText="Judul" />
+
             <Label text="Deskripsi">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-               <font>
-                  <Font size="14.0" />
-               </font>
+               <padding><Insets top="10.0" /></padding>
+               <font><Font size="14.0" /></font>
             </Label>
-            <TextArea fx:id="txtAreaKonten" prefHeight="212.0" prefWidth="482.0" promptText="Tulis Sesuatu" />
-            <Label prefHeight="20.0" prefWidth="74.0" text="Deadline:">
-               <font>
-                  <Font size="13.0" />
-               </font>
+            <TextArea fx:id="txtKonten" prefHeight="212.0" prefWidth="482.0" promptText="Tulis Sesuatu" />
+
+            <Label text="Deadline:">
+               <font><Font size="13.0" /></font>
             </Label>
-            <DatePicker fx:id="datePickerDeadline" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
+            <DatePicker fx:id="dpDeadline" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
          </children>
       </VBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="427.0" prefHeight="26.0" prefWidth="508.0">
+
+      <!-- ✅ ComboBox Kategori sinkron dengan controller -->
+      <ComboBox fx:id="combooxKategori" layoutX="72.0" layoutY="434.0" prefHeight="26.0" prefWidth="166.0" promptText="Kategori">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Pekerjaan" />
+               <String fx:value="Pribadi" />
+               <String fx:value="Akademik" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+
+      <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="494.0" prefHeight="26.0" prefWidth="508.0" spacing="10.0">
          <children>
-            <Button fx:id="btnHapus" alignment="TOP_LEFT" onAction="#onBtnHapus" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #ff5252;" text="Hapus" textFill="WHITE">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></Button>
-            <Button fx:id="btnSimpan" alignment="CENTER_RIGHT" onAction="#onBtnSimpanClick" style="-fx-background-color: #33d9b2;" text="Simpan" textFill="WHITE" />
+            <Button fx:id="btnHapus" onAction="#onBtnHapus" prefHeight="26.0" prefWidth="53.0"
+                    style="-fx-background-color: #ff5252;" text="Hapus" textFill="WHITE" />
+            <Button fx:id="btnSimpan" onAction="#onBtnSimpanClick"
+                    style="-fx-background-color: #33d9b2;" text="Simpan" textFill="WHITE" />
          </children>
       </HBox>
-      <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
+
+      <Pane prefHeight="601.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
+
       <Label layoutX="74.0" layoutY="34.0" text="Add New Task" textFill="#373b3e">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+         <font><Font name="System Bold" size="24.0" /></font>
       </Label>
+
    </children>
 </AnchorPane>
