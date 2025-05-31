@@ -17,28 +17,62 @@ public class Catatan {
         this.selesai = new SimpleBooleanProperty(false); // default belum selesai
     }
 
-    public int getId() { return id.get(); }
-    public void setId(int id) { this.id.set(id); }
-    public IntegerProperty idProperty() { return id; }
+    public int getId() {
+        return id.get();
+    }
+    public void setId(int id) {
+        this.id.set(id);
+    }
+    public IntegerProperty idProperty() {
+        return id;
+    }
 
-    public String getJudul() { return judul.get(); }
-    public void setJudul(String judul) { this.judul.set(judul); }
-    public StringProperty judulProperty() { return judul; }
+    public String getJudul() {
+        return judul.get();
+    }
+    public void setJudul(String judul) {
+        this.judul.set(judul);
+    }
+    public StringProperty judulProperty() {
+        return judul;
+    }
 
-    public String getKonten() { return konten.get(); }
-    public void setKonten(String konten) { this.konten.set(konten); }
-    public StringProperty kontenProperty() { return konten; }
+    public String getKonten() {
+        return konten.get();
+    }
+    public void setKonten(String konten) {
+        this.konten.set(konten);
+    }
+    public StringProperty kontenProperty() {
+        return konten;
+    }
 
-    public String getDeadline() { return deadline.get(); }
-    public void setDeadline(String deadline) { this.deadline.set(deadline); }
-    public StringProperty deadlineProperty() { return deadline; }
+    public String getDeadline() {
+        return deadline.get();
+    }
+    public void setDeadline(String deadline) {
+        this.deadline.set(deadline);
+    }
+    public StringProperty deadlineProperty() {
+        return deadline;
+    }
 
-    public boolean isSelesai() { return selesai.get(); }
-    public void setSelesai(boolean selesai) { this.selesai.set(selesai); }
-    public BooleanProperty selesaiProperty() { return selesai; }
+    public boolean isSelesai() {
+        return selesai.get();
+    }
+    public void setSelesai(boolean selesai) {
+        this.selesai.set(selesai);
+    }
+    public BooleanProperty selesaiProperty() {
+        return selesai; }
+
+
 
     // Alias method
     public String getIsi() {
+
         return getKonten();
     }
+
+
 }

@@ -32,7 +32,7 @@
          <columns>
             <TableColumn fx:id="id" prefWidth="50.0" text="ID" />
             <TableColumn fx:id="judul" prefWidth="150.0" text="Judul" />
-            <TableColumn prefWidth="134.66656494140625" text="Kategori" />
+            <TableColumn fx:id="kategori" prefWidth="100.0" text="Kategori"/>
             <TableColumn fx:id="deadline" prefWidth="156.53338623046875" text="Deadline" />
             <TableColumn fx:id="countdown" prefWidth="154.6666259765625" text="Countdown" />
             <TableColumn fx:id="status" prefWidth="102.9334716796875" text="Status" />

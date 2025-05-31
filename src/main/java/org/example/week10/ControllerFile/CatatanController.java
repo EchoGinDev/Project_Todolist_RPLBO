@@ -31,6 +31,7 @@ public class CatatanController {
     @FXML private TableColumn<Catatan, String> deadline;
     @FXML private TableColumn<Catatan, String> countdown;
     @FXML private TableColumn<Catatan, Boolean> status;
+    @FXML private TableColumn<Catatan, String> kategori;
     @FXML private TextField searchBox;
     @FXML private Button btnLogout;
 
@@ -45,6 +46,8 @@ public class CatatanController {
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
+        kategori.setCellValueFactory(data -> data.getValue().kategoriProperty());
+
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
         status.setCellFactory(CheckBoxTableCell.forTableColumn(status));
@@ -231,6 +234,9 @@ public class CatatanController {
             showAlert(Alert.AlertType.WARNING, "Pilih catatan yang ingin diedit.");
         }
     }
+
+
+
 
     public void refreshData() {
         catatanList.setAll(DBManager.getInstance().getAllCatatan());

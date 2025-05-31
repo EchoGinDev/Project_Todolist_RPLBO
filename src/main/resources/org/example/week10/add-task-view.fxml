@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.AddTaskController">
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.AddTaskController">
    <children>
       <VBox layoutX="74.0" layoutY="77.0" prefHeight="349.0" prefWidth="508.0">
          <children>
@@ -32,16 +42,29 @@
             <DatePicker fx:id="datePickerDeadline" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
          </children>
       </VBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="427.0" prefHeight="26.0" prefWidth="508.0">
+
+      <ComboBox fx:id="comboBoxKategori" layoutX="74.0" layoutY="419.0" prefHeight="26.0" prefWidth="166.0" promptText="Kategori">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Pekerjaan" />
+               <String fx:value="Pribadi" />
+               <String fx:value="Akademik" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+
+      <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="494.0" prefHeight="26.0" prefWidth="508.0">
          <children>
             <Button fx:id="btnHapus" alignment="TOP_LEFT" onAction="#onBtnHapus" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #ff5252;" text="Hapus" textFill="WHITE">
                <HBox.margin>
                   <Insets right="10.0" />
-               </HBox.margin></Button>
+               </HBox.margin>
+            </Button>
             <Button fx:id="btnSimpan" alignment="CENTER_RIGHT" onAction="#onBtnSimpanClick" style="-fx-background-color: #33d9b2;" text="Simpan" textFill="WHITE" />
          </children>
       </HBox>
-      <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
+
+      <Pane prefHeight="601.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
       <Label layoutX="74.0" layoutY="34.0" text="Add New Task" textFill="#373b3e">
          <font>
             <Font name="System Bold" size="24.0" />
