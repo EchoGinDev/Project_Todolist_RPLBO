@@ -9,7 +9,7 @@
       <!-- Sidebar kiri -->
       <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="150.0" style="-fx-background-color: #A3DDD3;">
          <children>
-            <Button fx:id="btnLogout" layoutX="48.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleLogout" style="-fx-background-color: #F55454; -fx-text-fill: white;" text="Logout" />
+            <Button fx:id="btnLogout" layoutX="18.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="26.0" prefWidth="114.0" style="-fx-background-color: #F55454; -fx-text-fill: white;" text="Logout" />
          </children>
       </AnchorPane>
 
@@ -37,7 +37,7 @@
       <!-- Tombol Add & Delete -->
       <Button fx:id="btnTambahCatatan" layoutX="911.0" layoutY="440.0" mnemonicParsing="false" onAction="#onBtnAddClick" style="-fx-background-color: #57E2D2; -fx-text-fill: white;" text="Add" />
       <Button fx:id="btnHapusCatatan" layoutX="846.0" layoutY="440.0" mnemonicParsing="false" onAction="#onBtnHapus" style="-fx-background-color: #F55454; -fx-text-fill: white;" text="Delete" />
-      <Button fx:id="btnEditCatatan" layoutX="793.0" layoutY="440.0" mnemonicParsing="false" onAction="#onBtnEdit" style="-fx-background-color: #c65102; -fx-text-fill: white;" text="Edit" />
+      <Button fx:id="btnEditCatatan" layoutX="780.0" layoutY="440.0" mnemonicParsing="false" onAction="#onBtnEdit" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #FFA500; -fx-text-fill: white;" text="Edit" />
 
    </children>
 </AnchorPane>

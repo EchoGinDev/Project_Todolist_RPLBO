@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="567.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.CatatanController">
+<AnchorPane prefHeight="567.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.Controller.CatatanController">
     <children>
         <TextField fx:id="searchBox" layoutX="148.0" layoutY="51.0" prefHeight="26.0" prefWidth="164.0" promptText="Search" />
         <TableView fx:id="tableViewCatatan" layoutX="148.0" layoutY="85.0" prefHeight="311.0" prefWidth="606.0">
