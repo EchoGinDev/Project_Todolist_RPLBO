@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="537.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.EditTaskController">
+    <children>
+        <VBox layoutX="74.0" layoutY="77.0" prefHeight="349.0" prefWidth="508.0">
+            <children>
+                <Label prefHeight="20.0" prefWidth="87.0" text="Task-Title :">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtFldJudul" promptText="Judul" />
+                <Label text="Deskripsi">
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextArea fx:id="txtAreaKonten" prefHeight="212.0" prefWidth="482.0" promptText="Tulis Sesuatu" />
+                <Label prefHeight="20.0" prefWidth="74.0" text="Deadline:">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+                <DatePicker fx:id="datePickerDeadline" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
+            </children>
+        </VBox>
+        <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="427.0" prefHeight="26.0" prefWidth="508.0">
+            <children>
+                <Button fx:id="btnBatal" alignment="TOP_LEFT" onAction="#onBtnBatal" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #ff5252;" text="Batal" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin></Button>
+                <Button fx:id="btnUpdate" alignment="CENTER_RIGHT" onAction="#onBtnUpdateClick" style="-fx-background-color: #33d9b2;" text="Update" textFill="WHITE" />
+            </children>
+        </HBox>
+        <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
+        <Label layoutX="74.0" layoutY="34.0" text="Edit Task" textFill="#373b3e">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

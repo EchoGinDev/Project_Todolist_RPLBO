@@ -4,13 +4,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.DriverManager.getConnection;
+
 public class DBManager {
     private static DBManager instance;
     private Connection conn;
 
     private DBManager() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:catatan.db");
+            conn = getConnection("jdbc:sqlite:catatan.db");
             createTableIfNotExists();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,6 +49,9 @@ public class DBManager {
                 String judul = rs.getString("judul");
                 String konten = rs.getString("konten");
                 String deadline = rs.getString("deadline");
+                if (deadline != null && deadline.length() > 10) {
+                    deadline = deadline.substring(0, 10); // ambil hanya yyyy-MM-dd
+                }
                 list.add(new Catatan(id, judul, konten, deadline));
             }
         } catch (SQLException e) {
@@ -54,6 +59,7 @@ public class DBManager {
         }
         return list;
     }
+
 
     public void tambahCatatan(Catatan catatan) {
         String sql = "INSERT INTO catatan (judul, konten, deadline) VALUES (?, ?, ?)";
@@ -76,4 +82,26 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+
+    public void updateCatatan(Catatan catatan) {
+        String sql = "UPDATE catatan SET judul = ?, konten = ?, deadline = ? WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, catatan.getJudul());
+            pstmt.setString(2, catatan.getKonten());
+
+            // Pastikan deadline tanpa jam
+            String deadline = catatan.getDeadline();
+            if (deadline != null && deadline.length() > 10) {
+                deadline = deadline.substring(0, 10);
+            }
+            pstmt.setString(3, deadline);
+            pstmt.setInt(4, catatan.getId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }
