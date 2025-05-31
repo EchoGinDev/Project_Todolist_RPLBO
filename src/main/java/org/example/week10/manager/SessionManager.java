@@ -1,4 +1,4 @@
-package org.example.week10;
+package org.example.week10.manager;
 
 import java.io.*;
 

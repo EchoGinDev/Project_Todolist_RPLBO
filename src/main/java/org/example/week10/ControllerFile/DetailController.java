@@ -1,8 +1,9 @@
-package org.example.week10;
+package org.example.week10.ControllerFile;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import org.example.week10.Catatan;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
