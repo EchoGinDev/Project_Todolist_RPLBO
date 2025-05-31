@@ -31,7 +31,7 @@
             <TableColumn fx:id="kategori" prefWidth="100.0" text="Kategori" />
             <TableColumn fx:id="deadline" prefWidth="156.53338623046875" text="Deadline" />
             <TableColumn fx:id="countdown" prefWidth="154.6666259765625" text="Countdown" />
-            <TableColumn fx:id="status" prefWidth="137.33331298828125" text="Status" />
+            <TableColumn fx:id="status" prefWidth="137.3333740234375" text="Status" />
          </columns>
       </TableView>
 

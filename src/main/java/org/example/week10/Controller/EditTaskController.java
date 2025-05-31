@@ -39,7 +39,7 @@ public class EditTaskController {
         try {
             selectedCatatan.setJudul(txtFldJudul.getText());
             selectedCatatan.setKonten(txtAreaKonten.getText());
-            selectedCatatan.setDeadline(datePickerDeadline.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 00:00:00");
+            selectedCatatan.setDeadline(datePickerDeadline.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             selectedCatatan.setKategori(comboBoxKategori.getValue());
 
             DBManager.getInstance().updateCatatan(selectedCatatan);

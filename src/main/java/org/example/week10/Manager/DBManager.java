@@ -6,16 +6,15 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.DriverManager.getConnection;
-
 public class DBManager {
     private static DBManager instance;
     private Connection conn;
 
     private DBManager() {
         try {
-            conn = getConnection("jdbc:sqlite:catatan.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:catatan.db");
             createTableIfNotExists();
+            alterTableIfNeeded(); // Tambahan untuk pastikan kolom selesai ada
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,11 +33,20 @@ public class DBManager {
                 "judul TEXT NOT NULL," +
                 "konten TEXT," +
                 "deadline TEXT," +
-                "kategori TEXT)";
+                "kategori TEXT," +
+                "selesai INTEGER DEFAULT 0)";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void alterTableIfNeeded() {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("ALTER TABLE catatan ADD COLUMN selesai INTEGER DEFAULT 0");
+        } catch (SQLException ignored) {
+            // kolom mungkin sudah ada
         }
     }
 
@@ -53,12 +61,11 @@ public class DBManager {
                 String konten = rs.getString("konten");
                 String deadline = rs.getString("deadline");
                 String kategori = rs.getString("kategori");
+                boolean selesai = rs.getInt("selesai") == 1;
 
-                if (deadline != null && deadline.length() > 10) {
-                    deadline = deadline.substring(0, 10);
-                }
-
-                list.add(new Catatan(id, judul, konten, deadline, kategori));
+                Catatan catatan = new Catatan(id, judul, konten, deadline, kategori);
+                catatan.setSelesai(selesai);
+                list.add(catatan);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,12 +74,13 @@ public class DBManager {
     }
 
     public void tambahCatatan(Catatan catatan) {
-        String sql = "INSERT INTO catatan (judul, konten, deadline, kategori) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO catatan (judul, konten, deadline, kategori, selesai) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, catatan.getJudul());
             pstmt.setString(2, catatan.getKonten());
             pstmt.setString(3, catatan.getDeadline());
             pstmt.setString(4, catatan.getKategori());
+            pstmt.setBoolean(5, catatan.isSelesai());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,17 +98,25 @@ public class DBManager {
     }
 
     public void updateCatatan(Catatan catatan) {
-        String sql = "UPDATE catatan SET judul = ?, konten = ?, deadline = ?, kategori = ? WHERE id = ?";
+        String sql = "UPDATE catatan SET judul = ?, konten = ?, deadline = ?, kategori = ?, selesai = ? WHERE id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, catatan.getJudul());
             pstmt.setString(2, catatan.getKonten());
-            String deadline = catatan.getDeadline();
-            if (deadline != null && deadline.length() > 10) {
-                deadline = deadline.substring(0, 10);
-            }
-            pstmt.setString(3, deadline);
+            pstmt.setString(3, catatan.getDeadline());
             pstmt.setString(4, catatan.getKategori());
-            pstmt.setInt(5, catatan.getId());
+            pstmt.setBoolean(5, catatan.isSelesai());
+            pstmt.setInt(6, catatan.getId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCatatanStatus(int id, boolean selesai) {
+        String sql = "UPDATE catatan SET selesai = ? WHERE id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBoolean(1, selesai);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
