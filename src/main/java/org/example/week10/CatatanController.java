@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +25,6 @@ public class CatatanController {
     @FXML private TableView<Catatan> tableViewCatatan;
     @FXML private TableColumn<Catatan, Integer> id;
     @FXML private TableColumn<Catatan, String> judul;
-    @FXML private TableColumn<Catatan, String> konten;
     @FXML private TableColumn<Catatan, String> deadline;
     @FXML private TableColumn<Catatan, String> countdown;
     @FXML private TableColumn<Catatan, Boolean> status;
@@ -41,7 +41,6 @@ public class CatatanController {
 
         id.setCellValueFactory(data -> data.getValue().idProperty().asObject());
         judul.setCellValueFactory(data -> data.getValue().judulProperty());
-        konten.setCellValueFactory(data -> data.getValue().kontenProperty());
         deadline.setCellValueFactory(data -> data.getValue().deadlineProperty());
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
@@ -58,6 +57,17 @@ public class CatatanController {
 
         tableViewCatatan.setItems(catatanList);
         startCountdownThread();
+
+        tableViewCatatan.setRowFactory(tv -> {
+            TableRow<Catatan> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Catatan selectedCatatan = row.getItem();
+                    showDetailView(selectedCatatan);
+                }
+            });
+            return row;
+        });
     }
 
     private void startCountdownThread() {
@@ -108,7 +118,7 @@ public class CatatanController {
         } else {
             ObservableList<Catatan> filtered = FXCollections.observableArrayList();
             for (Catatan c : catatanList) {
-                if (c.getJudul().toLowerCase().contains(keyword) || c.getKonten().toLowerCase().contains(keyword)) {
+                if (c.getJudul().toLowerCase().contains(keyword)) {
                     filtered.add(c);
                 }
             }
@@ -152,6 +162,24 @@ public class CatatanController {
         }
     }
 
+    private void showDetailView(Catatan catatan) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/detail-view.fxml"));
+            Parent root = loader.load();
+
+            DetailController controller = loader.getController();
+            controller.setDetail(catatan);
+
+            Stage stage = new Stage();
+            stage.setTitle("Detail Catatan");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Gagal membuka detail catatan.");
+        }
+    }
+
     private void showAlert(Alert.AlertType type, String message) {
         Alert alert = new Alert(type, message);
         alert.setHeaderText(null);
@@ -177,4 +205,33 @@ public class CatatanController {
             showAlert(Alert.AlertType.ERROR, "Gagal logout.");
         }
     }
+    @FXML
+    private void onBtnEdit() {
+        Catatan selected = tableViewCatatan.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/week10/edit-task-view.fxml"));
+                Parent root = loader.load();
+
+                EditTaskController controller = loader.getController();
+                controller.setData(this, selected);
+
+                Stage stage = new Stage();
+                stage.setTitle("Edit Catatan");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Gagal membuka form edit catatan.");
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Pilih catatan yang ingin diedit.");
+        }
+    }
+
+    public void refreshData() {
+        catatanList.setAll(DBManager.getInstance().getAllCatatan());
+    }
+
+
 }
