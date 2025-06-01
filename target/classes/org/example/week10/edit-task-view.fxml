@@ -1,65 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="537.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.EditTaskController">
+<AnchorPane prefHeight="537.0" prefWidth="617.0" style="-fx-background-color: #f8f4fc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.week10.ControllerFile.EditTaskController">
     <children>
-        <VBox layoutX="74.0" layoutY="77.0" prefHeight="349.0" prefWidth="508.0">
+        <VBox layoutX="74.0" layoutY="77.0" prefHeight="290.0" prefWidth="508.0">
             <children>
                 <!-- Judul -->
-                <Label prefHeight="20.0" prefWidth="87.0" text="Task-Title :">
+                <Label prefHeight="20.0" prefWidth="87.0" text="Task-Title">
                     <font>
-                        <Font size="14.0" />
+                        <Font name="SansSerif Regular" size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtFldJudul" promptText="Judul" />
+                <TextField fx:id="txtFldJudul" promptText="Judul">
+               <VBox.margin>
+                  <Insets top="2.0" />
+               </VBox.margin></TextField>
 
                 <!-- Deskripsi -->
-                <Label text="Deskripsi">
+                <Label prefHeight="14.0" prefWidth="58.0" text="Deskripsi">
                     <padding>
-                        <Insets top="10.0" />
+                        <Insets bottom="2.0" top="10.0" />
                     </padding>
                     <font>
-                        <Font size="14.0" />
+                        <Font name="SansSerif Regular" size="14.0" />
                     </font>
+               <VBox.margin>
+                  <Insets bottom="2.0" />
+               </VBox.margin>
                 </Label>
                 <TextArea fx:id="txtAreaKonten" prefHeight="212.0" prefWidth="482.0" promptText="Tulis Sesuatu" />
-
-                <!-- Kategori -->
-                <Label prefHeight="20.0" prefWidth="87.0" text="Kategori:">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <ComboBox fx:id="comboBoxKategori" prefHeight="26.0" prefWidth="166.0" promptText="Pilih Kategori" />
-
-                <!-- Deadline -->
-                <Label prefHeight="20.0" prefWidth="74.0" text="Deadline:">
-                    <font>
-                        <Font size="13.0" />
-                    </font>
-                </Label>
-                <DatePicker fx:id="datePickerDeadline" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
             </children>
         </VBox>
 
         <!-- Tombol -->
-        <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="427.0" prefHeight="26.0" prefWidth="508.0">
+        <HBox alignment="CENTER_RIGHT" layoutX="74.0" layoutY="447.0" prefHeight="26.0" prefWidth="508.0">
             <children>
-                <Button fx:id="btnBatal" alignment="TOP_LEFT" onAction="#onBtnBatal" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #ff5252;" text="Batal" textFill="WHITE">
+                <Button fx:id="btnBatal" alignment="CENTER" onAction="#onBtnBatal" prefHeight="26.0" prefWidth="53.0" style="-fx-background-color: #f85c5c;" text="Batal" textFill="WHITE">
                     <HBox.margin>
                         <Insets right="10.0" />
                     </HBox.margin>
+               <font>
+                  <Font name="SansSerif Bold" size="12.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnUpdate" alignment="CENTER_RIGHT" onAction="#onBtnUpdateClick" style="-fx-background-color: #33d9b2;" text="Update" textFill="WHITE" />
+                <Button fx:id="btnUpdate" alignment="CENTER_RIGHT" onAction="#onBtnUpdateClick" prefHeight="33.0" prefWidth="57.0" style="-fx-background-color: #33d9b2;" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Bold" size="12.0" />
+               </font></Button>
             </children>
         </HBox>
 
         <!-- Sidebar -->
-        <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #86cecb;" />
+        <Pane prefHeight="538.0" prefWidth="56.0" style="-fx-background-color: #0464fc;" />
 
         <!-- Judul -->
         <Label layoutX="74.0" layoutY="34.0" text="Edit Task" textFill="#373b3e">
@@ -67,5 +71,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
+          <DatePicker fx:id="datePickerDeadline" layoutX="74.0" layoutY="411.0" prefHeight="26.0" prefWidth="166.0" promptText="Masukkan Deadline" />
+          <ComboBox fx:id="comboBoxKategori" layoutX="74.0" layoutY="376.0" prefHeight="26.0" prefWidth="166.0" promptText="Pilih Kategori" />
     </children>
 </AnchorPane>

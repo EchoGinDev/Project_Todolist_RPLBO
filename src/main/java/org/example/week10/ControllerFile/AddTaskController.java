@@ -16,9 +16,9 @@ public class AddTaskController {
     @FXML private DatePicker dpDeadline;
     @FXML private ComboBox<String> combooxKategori; // ✅ Ganti dari TextField ke ComboBox
 
-    private CatatanController catatanController;
+    private org.example.week10.ControllerFile.CatatanController catatanController;
 
-    public void setCatatanController(CatatanController controller) {
+    public void setCatatanController(org.example.week10.ControllerFile.CatatanController controller) {
         this.catatanController = controller;
     }
 
