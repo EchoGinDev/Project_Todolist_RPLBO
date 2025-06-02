@@ -51,27 +51,16 @@ public class CatatanController {
         kategori.setCellValueFactory(data -> data.getValue().kategoriProperty());
 
         status.setCellValueFactory(data -> data.getValue().selesaiProperty());
-        status.setCellFactory(CheckBoxTableCell.forTableColumn(status));
+        status.setCellFactory(tc -> new CheckBoxTableCell<>());
+
         status.setEditable(true);
-        status.setCellFactory(column -> {
-            CheckBoxTableCell<Catatan, Boolean> cell = new CheckBoxTableCell<>();
-            cell.setSelectedStateCallback(index -> {
-                Catatan catatan = tableViewCatatan.getItems().get(index);
-                return catatan.selesaiProperty();
-            });
 
-            cell.setOnMouseClicked(event -> {
-                int index = cell.getIndex();
-                if (index >= 0 && index < tableViewCatatan.getItems().size()) {
-                    Catatan catatan = tableViewCatatan.getItems().get(index);
-                    boolean newValue = !catatan.isSelesai();
-                    catatan.setSelesai(newValue);
-                    DBManager.getInstance().updateCatatanStatus(catatan.getId(), newValue);
-                }
+        for (Catatan catatan : catatanList) {
+            catatan.selesaiProperty().addListener((obs, oldVal, newVal) -> {
+                DBManager.getInstance().updateCatatanStatus(catatan.getId(), newVal);
             });
+        }
 
-            return cell;
-        });
 
         countdown.setCellValueFactory(data -> {
             Catatan c = data.getValue();

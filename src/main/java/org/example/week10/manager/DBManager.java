@@ -60,7 +60,7 @@ public class DBManager {
                 String konten = rs.getString("konten");
                 String deadline = rs.getString("deadline");
                 String kategori = rs.getString("kategori");
-                boolean selesai = rs.getInt("selesai") == 1;
+                boolean selesai = rs.getBoolean("selesai");
 
                 Catatan catatan = new Catatan(id, judul, konten, deadline, kategori);
                 catatan.setSelesai(selesai);
